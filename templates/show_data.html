@@ -1,0 +1,16 @@
+{% extends 'base.html' %} {% block main %}
+<!-- Showing the data -->
+<div class="container-fluid">
+  <h1>Showing Data for {{filename}}</h1>
+  <table class="table" id="main-table">
+    {% for row in csv %}
+    <tr>
+      {% for col in row %}
+      <td>{{ col }}</td>
+      {% endfor %}
+    </tr>
+    {% endfor %}
+  </table>
+</div>
+
+{% endblock %}

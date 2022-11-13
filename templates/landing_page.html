@@ -3,14 +3,18 @@
 {% for message in get_flashed_messages() %}
 <h2>{{ message }}</h2>
 {% endfor %}
-<form action="shortenurl" method="post">
+<form action="/" method="post" enctype="multipart/form-data">
   <div class="mb-3">
     <label for="formFile" class="form-label">Insert new branch data</label>
-    <input class="form-control" type="file" id="formFile" />
+    <input class="form-control" name="file" type="file" id="formFile" />
   </div>
 
   <input type="submit" class="btn btn-primary" value="Submit" />
 </form>
+<!-- Show input file name -->
+{% for file in files %}
+<h3>A {{file.filename}}</h3>
+{% endfor %}
 
 <!-- Showing the data -->
 <div class="container-fluid">

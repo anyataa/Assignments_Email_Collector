@@ -1,26 +1,29 @@
-<!-- HTML File for controlling the UI of landing page -->
-<!DOCTYPE html>
-<html lang="en">
+{% extends 'base.html' %} {% block main %}
+<h1>Email Storing Application</h1>
+{% for message in get_flashed_messages() %}
+<h2>{{ message }}</h2>
+{% endfor %}
+<form action="shortenurl" method="post">
+  <div class="mb-3">
+    <label for="formFile" class="form-label">Insert new branch data</label>
+    <input class="form-control" type="file" id="formFile" />
+  </div>
 
-<head>
-  {% block styles %}
-  <!-- Bootstrap CSS -->
-  {{ bootstrap.load_css() }}
-  {% endblock %}
+  <input type="submit" class="btn btn-primary" value="Submit" />
+</form>
 
-  <title>Your page title</title>
-  {% endblock %}
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Document</title>
-</head>
+<!-- Showing the data -->
+<div class="container-fluid">
+  <h1>Showing Data</h1>
+  <table class="table" id="main-table">
+    {% for row in csv %}
+    <tr>
+      {% for col in row %}
+      <td>{{ col }}</td>
+      {% endfor %}
+    </tr>
+    {% endfor %}
+  </table>
+</div>
 
-<body>
-  <h1>{{upload_file}}</h1>
-  <form method="POST" action="" enctype="multipart/form-data">
-    <p><input type="file" name="file"></p>
-    <p><input type="submit" value="Submit"></p>
-</body>
-
-</html>
+{% endblock %}

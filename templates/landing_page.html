@@ -11,23 +11,18 @@
 
   <input type="submit" class="btn btn-primary" value="Submit" />
 </form>
-<!-- Show input file name -->
-{% for file in files %}
-<h3>A {{file.filename}}</h3>
-{% endfor %}
 
-<!-- Showing the data -->
+<!-- show file in upload folder -->
 <div class="container-fluid">
-  <h1>Showing Data</h1>
-  <table class="table" id="main-table">
-    {% for row in csv %}
-    <tr>
-      {% for col in row %}
-      <td>{{ col }}</td>
-      {% endfor %}
-    </tr>
-    {% endfor %}
-  </table>
+  <h1>List of Data</h1>
+    <div class="list-group"></div>
+   {% for file in files %}
+
+    <a href={{url_for('upload', filename=file)}} class="list-group-item list-group-item-action active">{{file}}</a>
+    <br>
+
+  {% endfor %}
+    </div>
 </div>
 
 {% endblock %}

@@ -24,11 +24,15 @@ class InfoForm(FlaskForm):
     file = FileField('File')
     submit = SubmitField('Submit')
 
+# GET data to show the list of all uploaded file
 @app.route('/', methods=['GET'])
 def index():
-
     #  Form
     form = InfoForm()
+
+    # Access upload directory 
+    files = os.listdir(app.config['UPLOAD_PATH'])
+
     # Convert .excel file
     excel_file = pd.read_excel('mock.xls')
     excel_file.to_csv('converted_file_xls.csv',
@@ -43,8 +47,9 @@ def index():
     # Showing .csv file
     with open('./converted_file_txt.csv') as file:
         reader = csv.reader(file)
-        return render_template('landing_page.html', csv=reader, form = form)
+        return render_template('landing_page.html', csv=reader, form = form, files = files)
 
+# POST the data and save it to local directory named 'uploads'
 @app.route('/', methods=['POST'])
 def upload_file():
     form = InfoForm()
@@ -58,15 +63,16 @@ def upload_file():
         uploaded_file.save(os.path.join(app.config['UPLOAD_PATH'],uploaded_file.filename))
     return redirect(url_for('index'))
 
-
+# Get data per each file and show the data
 @app.route('/uploads/<filename>')
 def upload(filename):
     with open(app.config['UPLOAD_PATH']  + '/' + filename) as file:
         reader = csv.reader(file)
-        return render_template('show_data.html', csv=reader, filename=filename)
+        return render_template('show_data_page.html', csv=reader, filename=filename)
 
     # Download the report
     # return send_from_directory(app.config['UPLOAD_PATH'], filename)
+
    
 
 if __name__ == '__main__':
